@@ -123,6 +123,15 @@ angular.module('slick', [])
                 scope.currentIndex = currentSlide
               )
 
+          slider.on 'beforeChange', (event, slick, currentSlide, nextSlide) ->
+            scope.onBeforeChange() if scope.onBeforeChange
+
+            if currentIndex?
+              scope.$apply(->
+                currentIndex = currentSlide
+                scope.currentIndex = currentSlide
+              )
+
           scope.$watch("currentIndex", (newVal, oldVal) ->
             if currentIndex? and newVal? and newVal != currentIndex
               slider.slick('slickGoTo', newVal)

@@ -135,6 +135,17 @@ angular.module('slick', []).directive('slick', [
                 });
               }
             });
+            slider.on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+              if (scope.onBeforeChange) {
+                scope.onBeforeChange();
+              }
+              if (currentIndex != null) {
+                return scope.$apply(function () {
+                  currentIndex = currentSlide;
+                  return scope.currentIndex = currentSlide;
+                });
+              }
+            });
             return scope.$watch('currentIndex', function (newVal, oldVal) {
               if (currentIndex != null && newVal != null && newVal !== currentIndex) {
                 return slider.slick('slickGoTo', newVal);
